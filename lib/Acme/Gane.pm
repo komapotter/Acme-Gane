@@ -3,6 +3,19 @@ use strict;
 use warnings;
 our $VERSION = '0.01';
 
+use UNIVERSAL::require;
+
+sub type {
+    $_[0]->_get($_[1] || 'Wellington');        
+}
+
+sub _get {
+    my ( $class, $type ) = @_;
+    my $module = "Acme::Gane::Type::$type";
+    $module->require or die $@;
+    return $module->new;
+}
+
 1;
 __END__
 
