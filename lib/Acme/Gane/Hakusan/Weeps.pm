@@ -1,8 +1,9 @@
-package Acme::Gane::Type::Wellington;
+package Acme::Gane::Hakusan::Weeps 0.01;
+use utf8;
 use Any::Moose;
 use Acme::EyeDrops 'sightly';
 
-with 'Acme::Gane::Type::Role';
+with 'Acme::Gane::Hakusan::Role';
 
 sub frame {
     my $shape = <<'SHAPE';
@@ -33,7 +34,7 @@ sub frame {
                                      #                        
 SHAPE
     my $source = <<"END";
-print "Wellington\n";
+print "WEEPS: plastic JPY31,000(tax in) 6COLORS\n";
 END
 
     return sightly({

@@ -1,17 +1,25 @@
-package Acme::Gane 0.02;
+package Acme::Gane::Hakusan 0.01;
 use strict;
 use warnings;
 
 use Any::Moose;
 use UNIVERSAL::require;
+use Path::Class qw/dir/;
+use Cwd;
 
-sub brand {
-    $_[0]->_get($_[1]);        
+sub list_all {
+    my $dir = dir(Cwd::getcwd(), 'lib', join '/', (split '::', __PACKAGE__));
+    my @list = map { (my $file = $_->basename ) =~ s/\.pm//; uc $file } grep { ! /Role/ } $dir->children;
+    return @list;
+}
+
+sub model {
+    $_[0]->_get($_[1]);
 }
 
 sub _get {
-    my ( $class, $brand ) = @_;
-    my $module = join '::', "Acme::Gane", ucfirst $brand;
+    my ( $class, $model ) = @_;
+    my $module = join '::', "Acme::Gane::Hakusan", ucfirst $model;
     $module->require or die $@;
     return $module->new;
 }
