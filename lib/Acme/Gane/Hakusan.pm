@@ -3,15 +3,9 @@ use strict;
 use warnings;
 
 use Any::Moose;
-use UNIVERSAL::require;
-use Path::Class qw/dir/;
-use Cwd;
+extends 'Acme::Gane';
 
-sub list_all {
-    my $dir = dir(Cwd::getcwd(), 'lib', join '/', (split '::', __PACKAGE__));
-    my @list = map { (my $file = $_->basename ) =~ s/\.pm//; uc $file } grep { ! /Role/ } $dir->children;
-    return @list;
-}
+use UNIVERSAL::require;
 
 sub model {
     $_[0]->_get($_[1]);
@@ -19,9 +13,13 @@ sub model {
 
 sub _get {
     my ( $class, $model ) = @_;
-    my $module = join '::', "Acme::Gane::Hakusan", ucfirst $model;
+    my $module = join '::', __PACKAGE__, ucfirst $model;
     $module->require or die $@;
     return $module->new;
+}
+
+sub pkg_name {
+    return __PACKAGE__;
 }
 
 no Any::Moose;

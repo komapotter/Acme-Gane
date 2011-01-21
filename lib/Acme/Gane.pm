@@ -1,9 +1,14 @@
-package Acme::Gane 0.02;
+package Acme::Gane;
 use strict;
 use warnings;
 
+our $VERSION = '0.04';
+
 use Any::Moose;
 use UNIVERSAL::require;
+
+use Path::Class qw/dir/;
+use Cwd;
 
 sub brand {
     $_[0]->_get($_[1]);        
@@ -11,9 +16,16 @@ sub brand {
 
 sub _get {
     my ( $class, $brand ) = @_;
-    my $module = join '::', "Acme::Gane", ucfirst $brand;
+    my $module = join '::', __PACKAGE__, ucfirst $brand;
     $module->require or die $@;
     return $module->new;
+}
+
+sub model_list {
+    my $class = shift ;
+    my $dir = dir(Cwd::getcwd(), 'lib', join '/', (split '::', $class->pkg_name));
+    my @list = map { (my $file = $_->basename ) =~ s/\.pm//; uc $file } grep { ! /Role/ } $dir->children;
+    return "@list";
 }
 
 no Any::Moose;
