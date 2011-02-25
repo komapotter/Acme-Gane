@@ -1,7 +1,7 @@
 package Acme::Gane;
 use 5.12.1;
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 use Any::Moose;
 use UNIVERSAL::require;

@@ -5,4 +5,6 @@ Revision history for Perl extension Acme::Gane
 0.02    bluh bluh bluh 
 0.03    bluh bluh bluh
 0.04    Role.pm replace and rewrite
+0.05    use Module::Pluggable instead of UNIVERSAL::require
+        delete method 'model_list'
         
