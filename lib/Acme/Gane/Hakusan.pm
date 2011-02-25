@@ -1,21 +1,27 @@
 package Acme::Gane::Hakusan 0.01;
-use strict;
-use warnings;
+use 5.12.1;
 
+use Module::Pluggable require => 1;
 use Any::Moose;
 extends 'Acme::Gane';
 
 use UNIVERSAL::require;
 
 sub model {
-    $_[0]->_get($_[1]);
+    my $selected = ucfirst $_[1];
+    my ($model) = grep { /$selected/ } $_[0]->_get; 
+    return $model;
+}
+
+sub models {
+    my @models = $_[0]->_get;
+    return map { $_->name . "\n" } @models;
 }
 
 sub _get {
-    my ( $class, $model ) = @_;
-    my $module = join '::', __PACKAGE__, ucfirst $model;
-    $module->require or die $@;
-    return $module->new;
+    my $class = shift;
+    my @models = $class->plugins();
+    return @models;
 }
 
 sub pkg_name {

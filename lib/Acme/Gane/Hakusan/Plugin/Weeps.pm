@@ -1,9 +1,11 @@
-package Acme::Gane::Hakusan::Weeps 0.01;
+package Acme::Gane::Hakusan::Plugin::Weeps 0.01;
 use utf8;
 use Any::Moose;
 
 extends 'Acme::Gane::Hakusan';
 with 'Acme::Gane::Role';
+
+sub name { 'WEEPS' }
 
 sub frame_shape {
     my $shape = <<'END';
